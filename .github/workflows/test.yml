@@ -6,11 +6,11 @@ on:
   pull_request:
     branches:
       - master
-    workflow_dispatch:
-    inputs:
-      git-ref:
-        description: Git Ref (Optional)    
-        required: false
+  workflow_dispatch:
+  inputs:
+    git-ref:
+      description: Git Ref (Optional)    
+      required: false
 
 name: run tests
 jobs:
