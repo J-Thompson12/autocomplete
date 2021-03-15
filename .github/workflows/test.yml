@@ -49,8 +49,6 @@ jobs:
     - name: Calc coverage
       run: |
         go test -v -covermode=count -coverprofile=coverage.out
-    - name: Check coverage percent
-      run: ./coverage.sh
     - name: Convert coverage.out to coverage.lcov
       uses: jandelgado/gcov2lcov-action@v1.0.6
     - name: Coveralls
@@ -58,3 +56,5 @@ jobs:
       with:
           github-token: ${{ secrets.github_token }}
           path-to-lcov: coverage.out
+    - name: Check coverage percent
+      run: ./coverage.sh
