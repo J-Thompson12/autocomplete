@@ -6,6 +6,11 @@ on:
   pull_request:
     branches:
       - master
+    workflow_dispatch:
+    inputs:
+      git-ref:
+        description: Git Ref (Optional)    
+        required: false
 
 name: run tests
 jobs:
@@ -24,17 +29,13 @@ jobs:
         version: v1.29
 
   test:
-    strategy:
-      matrix:
-        go-version: [1.15.x]
-        platform: [ubuntu-latest, macos-latest, windows-latest]
-    runs-on: ${{ matrix.platform }}
+    runs-on: ubuntu-latest
     steps:
     - name: Install Go
       if: success()
       uses: actions/setup-go@v2
       with:
-        go-version: ${{ matrix.go-version }}
+        go-version: 1.15.7
     - name: Checkout code
       uses: actions/checkout@v2
     - name: Run tests
@@ -47,12 +48,14 @@ jobs:
       if: success()
       uses: actions/setup-go@v2
       with:
-        go-version: 1.15.x
+        go-version: 1.15.7
     - name: Checkout code
       uses: actions/checkout@v2
     - name: Calc coverage
       run: |
         go test -v -covermode=count -coverprofile=coverage.out
+    - name: copy coverage
+      run: cp coverage.out coverage-check.out
     - name: Convert coverage.out to coverage.lcov
       uses: jandelgado/gcov2lcov-action@v1.0.6
     - name: Coveralls
@@ -60,3 +63,5 @@ jobs:
       with:
           github-token: ${{ secrets.github_token }}
           path-to-lcov: coverage.lcov
+    - name: Check coverage percent
+      run: ./coverage.sh
