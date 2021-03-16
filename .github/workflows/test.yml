@@ -8,6 +8,12 @@ on:
       - master
 
 name: run tests
+on:
+  workflow_dispatch:
+  inputs:
+    git-ref:
+      description: Git Ref (Optional)    
+      required: false
 jobs:
   lint:
     runs-on: ubuntu-latest
