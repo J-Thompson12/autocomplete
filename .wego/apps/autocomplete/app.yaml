@@ -1,0 +1,7 @@
+apiVersion: wego.weave.works/v1alpha1
+kind: Application
+metadata:
+  name: autocomplete
+spec:
+  path: ./
+  url: ssh://git@github.com/J-Thompson12/autocomplete.git
