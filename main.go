@@ -30,6 +30,8 @@ func main() {
 		panic(err)
 	}
 
+	// test a thing
+
 	router := mux.NewRouter()
 	router.HandleFunc("/autocomplete", words.autoComplete).Methods("Get").Queries("term", "{term}")
 	err = http.ListenAndServe(":5000", router)

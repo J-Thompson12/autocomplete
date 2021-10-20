@@ -7,7 +7,6 @@ name: run tests
 jobs:
   lint:
     runs-on: ubuntu-latest
-    if: contains(github.event.pull_request.labels.*.name, 'safe to test')
     steps:
     - name: Install Go
       uses: actions/setup-go@v2
