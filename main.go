@@ -29,6 +29,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+	// Thing
 
 	router := mux.NewRouter()
 	router.HandleFunc("/autocomplete", words.autoComplete).Methods("Get").Queries("term", "{term}")
