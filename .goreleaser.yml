@@ -1,0 +1,78 @@
+project_name: gitops
+env:
+  - GO111MODULE=on
+before:
+  hooks:
+    - go mod tidy
+checksum:
+  name_template: "{{ .ProjectName }}_checksums.txt"
+release:
+  prerelease: auto
+archives:
+  - format: binary
+    replacements:
+      amd64: x86_64
+    name_template: "gitops-{{.Os}}-{{.Arch}}"
+builds:
+  - <<: &build_defaults
+      binary: "gitops-{{.Os}}-{{.Arch}}"
+      main: ./cmd/gitops
+      env:
+        - CGO_ENABLED=0
+    id: linux-amd64
+    goos:
+      - linux
+    goarch:
+      - amd64
+    goarm:
+      - 7
+  - <<: *build_defaults
+    id: linux-arm64
+    goos:
+      - linux
+    goarch:
+      - arm64
+    goarm:
+      - 7
+  - <<: *build_defaults
+    id: linux-arm
+    goos:
+      - linux
+    goarch:
+      - arm
+    goarm:
+      - 7
+  - <<: *build_defaults
+    id: darwin-amd64
+    goos:
+      - darwin
+    goarch:
+      - amd64
+  - <<: *build_defaults
+    id: darwin-arm64
+    goos:
+      - darwin
+    goarch:
+      - arm64
+
+brews:
+  - name: gitops
+    tap:
+      owner: J-Thompson12
+      name: homebrew-tap
+      token: "{{ .Env.BOT_TOKEN }}"
+      branch: main
+    commit_author:
+      name: justin
+      email: ustin@weave.works
+    folder: Formula
+    homepage: "https://docs.gitops.weave.works/docs/getting-started"
+    description: "GitOps support for Kubernetes"
+    install: |
+      bin.install "gitops"
+      bash_output = Utils.safe_popen_read(bin/"gitops", "completion", "bash")
+      (bash_completion/"gitops").write bash_output
+      zsh_output = Utils.safe_popen_read(bin/"gitops", "completion", "zsh")
+      (zsh_completion/"_gitops").write zsh_output
+    test: |
+      system "#{bin}/gitops version"
