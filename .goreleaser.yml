@@ -61,7 +61,6 @@ brews:
       owner: J-Thompson12
       name: homebrew-tap
       token: "{{ .Env.BOT_TOKEN }}"
-      branch: main
     commit_author:
       name: justin
       email: ustin@weave.works
