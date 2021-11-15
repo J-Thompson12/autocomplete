@@ -21,6 +21,8 @@ jobs:
           go-version: 1.16.x
       - name: "Git diff"
         run: git --no-pager diff
+      - name: build
+        run: go build
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v1
         with:

@@ -1,4 +1,4 @@
-project_name: gitops
+project_name: autocomplete
 env:
   - GO111MODULE=on
 before:
@@ -12,11 +12,11 @@ archives:
   - format: binary
     replacements:
       amd64: x86_64
-    name_template: "gitops-{{.Os}}-{{.Arch}}"
+    name_template: "autocomplete-{{.Os}}-{{.Arch}}"
 builds:
   - <<: &build_defaults
-      binary: "gitops-{{.Os}}-{{.Arch}}"
-      main: ./cmd/gitops
+      binary: "autocomplete-{{.Os}}-{{.Arch}}"
+      main: ./autocomplete
       env:
         - CGO_ENABLED=0
     id: linux-amd64
@@ -56,7 +56,7 @@ builds:
       - arm64
 
 brews:
-  - name: gitops
+  - name: autocomplete
     tap:
       owner: J-Thompson12
       name: homebrew-tap
@@ -69,10 +69,10 @@ brews:
     homepage: "https://docs.gitops.weave.works/docs/getting-started"
     description: "GitOps support for Kubernetes"
     install: |
-      bin.install "gitops"
-      bash_output = Utils.safe_popen_read(bin/"gitops", "completion", "bash")
-      (bash_completion/"gitops").write bash_output
-      zsh_output = Utils.safe_popen_read(bin/"gitops", "completion", "zsh")
-      (zsh_completion/"_gitops").write zsh_output
+      bin.install "autocomplete"
+      bash_output = Utils.safe_popen_read(bin/"autocomplete", "completion", "bash")
+      (bash_completion/"autocomplete").write bash_output
+      zsh_output = Utils.safe_popen_read(bin/"_autocomplete", "completion", "zsh")
+      (zsh_completion/"_autocomplete").write zsh_output
     test: |
-      system "#{bin}/gitops version"
+      system "#{bin}/autocomplete"
