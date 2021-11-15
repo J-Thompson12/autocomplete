@@ -22,7 +22,7 @@ jobs:
       - name: "Git diff"
         run: git --no-pager diff
       - name: build
-        run: go build -o ./cmd
+        run: go build  -o bin/autocomplete 
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v1
         with:
