@@ -60,7 +60,7 @@ brews:
     tap:
       owner: J-Thompson12
       name: homebrew-tap
-      token: "{{ .Env.BOT_TOKEN }}"
+      token: "{{ .Env.GITHUB_TOKEN }}"
     commit_author:
       name: justin
       email: ustin@weave.works
