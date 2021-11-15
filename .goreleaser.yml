@@ -16,7 +16,7 @@ archives:
 builds:
   - <<: &build_defaults
       binary: "autocomplete-{{.Os}}-{{.Arch}}"
-      main: ./autocomplete
+      main: ./
       env:
         - CGO_ENABLED=0
     id: linux-amd64
